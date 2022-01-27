@@ -1,26 +1,34 @@
-import { StyleSheet, FlatList, View, Text } from "react-native";
+import { StyleSheet, FlatList, View, Button } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import CourseItem from "../componets/CourseItem";
 import NoData from "../componets/NoData";
 
-const Landing = () => {
+const Landing = ({ navigation }) => {
   const existingCourses = useSelector((state) =>
-    state.coures.existingCourses.filter((obj) => obj.selected == true)
+    state.coures.existingCourses.filter((obj) => obj.selected == false)
   );
 
   if (existingCourses.length > 0) {
     return (
-      <FlatList
-        data={existingCourses}
-        renderItem={({ item }) => (
-          <CourseItem
-            image={item.image}
-            title={item.title}
-            price={item.price}
-          />
-        )}
-      />
+      <View>
+        <Button
+          title="Go to Details... again"
+          onPress={() => navigation.navigate("Details")}
+        />
+        <FlatList
+          data={existingCourses}
+          renderItem={({ item }) => (
+            <CourseItem
+              image={item.image}
+              title={item.title}
+              price={item.price}
+              viewDetails={() => alert("Détails")}
+              onAddToCart={() => alert("Course ajouter Panier")}
+            />
+          )}
+        />
+      </View>
     );
   }
   return <NoData text="Aucune formation disponible" />;
