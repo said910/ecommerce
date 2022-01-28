@@ -12,10 +12,6 @@ const Landing = ({ navigation }) => {
   if (existingCourses.length > 0) {
     return (
       <View>
-        <Button
-          title="Go to Details... again"
-          onPress={() => navigation.navigate("Details")}
-        />
         <FlatList
           data={existingCourses}
           renderItem={({ item }) => (
@@ -23,7 +19,12 @@ const Landing = ({ navigation }) => {
               image={item.image}
               title={item.title}
               price={item.price}
-              viewDetails={() => alert("Détails")}
+              viewDetails={() =>
+                navigation.navigate("Details", {
+                  courseId: item.id,
+                  title: item.title,
+                })
+              }
               onAddToCart={() => alert("Course ajouter Panier")}
             />
           )}
